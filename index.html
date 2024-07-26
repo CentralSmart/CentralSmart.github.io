@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Font Gallery</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <style>
+        .font-example {
+            font-size: 18px;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+            width: 150px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #font-display {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Font Gallery</h1>
+            <div class="field">
+                <div class="control">
+                    <input class="input" type="text" id="name-input" placeholder="Enter your name">
+                </div>
+            </div>
+            <div id="font-display" class="mt-4"></div>
+            <div id="selected-font" class="notification is-info mt-4 is-hidden"></div>
+        </div>
+    </section>
+
+    <script>
+        const fonts = [
+            'Arial', 'Verdana', 'Helvetica', 'Times New Roman', 'Courier',
+            'Georgia', 'Palatino', 'Garamond', 'Bookman', 'Comic Sans MS',
+            'Trebuchet MS', 'Arial Black', 'Impact'
+        ];
+
+        function displayFonts() {
+            const fontDisplay = document.getElementById('font-display');
+            const nameInput = document.getElementById('name-input');
+
+            fonts.forEach(font => {
+                const div = document.createElement('div');
+                div.className = 'font-example';
+                div.style.fontFamily = font;
+                div.textContent = nameInput.value || font;
+                div.onclick = () => selectFont(font);
+                fontDisplay.appendChild(div);
+            });
+        }
+
+        function selectFont(font) {
+            const selectedFontDiv = document.getElementById('selected-font');
+            selectedFontDiv.textContent = Selected font: ${font};
+            selectedFontDiv.classList.remove('is-hidden');
+        }
+
+        function updateDisplay() {
+            const fontDisplay = document.getElementById('font-display');
+            const nameInput = document.getElementById('name-input');
+            const text = nameInput.value;
+
+            fontDisplay.childNodes.forEach(div => {
+                div.textContent = text || div.style.fontFamily;
+            });
+        }
+
+        // Initial display
+        displayFonts();
+
+        // Add event listener for input changes
+        document.getElementById('name-input').addEventListener('input', updateDisplay);
+    </script>
+</body>
+</html>
